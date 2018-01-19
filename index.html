@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+	*{
+            margin: 0;
+            padding: 0;
+        }
+        .header{
+            height: 200px;
+            display: flex;
+            width:100%;
+            position: relative;
+        }
+        .sticky{
+            position: absolute;
+            bottom: 0;
+            height: 60px;
+            width:100%;
+            background: #007fff;
+        }
+        .main{
+            height:300vh;
+            min-height:1000px;
+            width:100%;
+            background: #f9f9f9;
+        }
+
+
+        /* class for js */
+        .fixed{
+            position: fixed;
+            top:0;
+            bottom: auto;
+            z-index: 500;
+        }
+	</style>
+</head>
+<body>
+
+	<header class="header">
+    <div class="sticky js-header"></div>
+</header>
+<div class="main"></div>
+
+	<script>
+	(function (options) {
+        if(options.sticky != undefined && options.fixedClass != undefined) {
+
+            var sticky = document.querySelector(options.sticky);
+            var startPositionTop = sticky.offsetTop;
+            var scrollTop = 0;
+
+            window.addEventListener('scroll', function () {
+
+                scrollTop = this.scrollY;
+
+
+                if(scrollTop >= startPositionTop){
+                    sticky.classList.add(options.fixedClass)
+                }
+                else if(sticky.className.indexOf(options.fixedClass) != -1){
+                    if(scrollTop <= startPositionTop){
+                        sticky.classList.remove(options.fixedClass)
+                    }
+                }
+            });
+        }else{
+            console.warn('please add header selector as (.header) and class for fixed header as (fixed). ')
+        }
+
+    })({
+        sticky : '.js-header',
+        fixedClass : 'fixed',
+    });
+	</script>
+</body>
+</html>
